@@ -57,10 +57,22 @@
 		}
 	}
 
+/**
+ * set massege
+ */
 
+function setMsg($msg){
 
+	setcookie('smsgs', $msg, time()+10);
+}
 
+function getMsg(){
 
+	if (isset($_COOKIE['smsgs'])) {
+
+		echo "<p class=\" alert alert-success \">" . $_COOKIE['smsgs'] . " <button class='close' data-dismiss='alert'></p>";
+	}
+}
 
 
 

@@ -38,7 +38,14 @@
 			$password = $_POST['password'];
 			$pass_hash = password_hash( $password, PASSWORD_DEFAULT);	
 
-
+			//cpassword 
+			// $cpass = $_POST['cpass'];
+			// if ( $password == $cpass ) {
+			// 	$password_check == true;
+			// }else{
+			// 	$password_check == false;
+			// }
+			
 
 
 
@@ -46,11 +53,13 @@
 				 $mess = "<p class='alert alert-danger'>All Filds Are required ! <button class='close' data-dismiss='alert'>&times;</button></p>";
 			// }else if(filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
 			// 	$mess = "<p class='alert alert-info'> Invalid Email Formate ! <button class='close' data-dismiss='alert'>&times;</button></p>";
-			}else if($user_name_check == false){ 
+			// }elseif($password_check == false ){
+			// 	$mess = "<p class='alert alert-warning'> password not match ! <button class='close' data-dismiss='alert'>&times;</button></p>";
+			}elseif($user_name_check == false){ 
 				$mess = "<p class='alert alert-danger'> Username already exits ! <button class='close' data-dismiss='alert'>&times;</button></p>";
-			}else if($email_check == false){ 
+			}elseif($email_check == false){ 
 				$mess = "<p class='alert alert-danger'> Email already exits ! <button class='close' data-dismiss='alert'>&times;</button></p>";
-			}else if($cell_check == false){ 
+			}elseif($cell_check == false){ 
 				$mess = "<p class='alert alert-danger'> Cell already exits ! <button class='close' data-dismiss='alert'>&times;</button></p>";
 			}else {
 
@@ -61,6 +70,11 @@
 				if( $data['status'] == 'yes'){
 					$sql = "INSERT INTO user(name, username, email, cell, password, photo) VALUES ('$name','$username','$email','$cell','$pass_hash', '$photo_name')";
 					$connection -> query($sql);
+
+					setMsg('User registration Successful !');
+
+					header('location:register.php');
+
 
 					$mess = "<p class='alert alert-success'>Data Stable! <button class='close' data-dismiss='alert'>&times;</button></p>";
 				}else{
@@ -93,31 +107,37 @@
 				if (isset($mess)) {
 					echo $mess;
 				}
+
+				getMsg();
 			?>
 			<div class="card-body">
 				<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="">Name</label>
-						<input name="name" class="form-control" type="text">
+						<input name="name" class="form-control" value="<?php echo old('name'); ?>" type="text">
 					</div>
 					<div class="form-group">
 						<label for="">Username</label>
-						<input name="username" class="form-control" type="text">
+						<input name="username" class="form-control" value="<?php echo old('username'); ?>" type="text">
 					</div>
 					<div class="form-group">
 						<label for="">Email</label>
-						<input name="email" class="form-control" type="text">
+						<input name="email" class="form-control" value="<?php echo old('email'); ?>" type="text">
 					</div>
 					<div class="form-group">
 						<label for="">Cell</label>
-						<input name="cell" class="form-control" type="text">
+						<input name="cell" class="form-control" value="<?php echo old('cell'); ?>" type="text">
 					</div>
 					<div class="form-group">
 						<label for="">Password</label>
-						<input name="password" type="password" value="" id="myInput">
+						<input name="password" type="password" id="myInput">
+					</div>
+					<!-- <div class="form-group">
+						<label for="">Confirm password</label>
+						<input name="cpass" type="password">
 						<br>
 						<input type="checkbox" onclick="myFunction()">Show Password
-					</div>
+					</div> -->
 					<div class="form-group">
 						<label for="">Photo</label>
 						<input name="photo" class="form-control" type="file">
